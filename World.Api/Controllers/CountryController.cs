@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using World.Api.Data;
+using World.Api.Models;
 
 namespace World.Api.Controllers
 {
@@ -8,13 +9,19 @@ namespace World.Api.Controllers
     [ApiController]
     public class CountryController : ControllerBase
     {
-        private readonly ApplicationDbContext _context;
-        public CountryController(ApplicationDbContext context)
+        private readonly ApplicationDbContext _dbcontext;
+        public CountryController(ApplicationDbContext dbcontext)
         {
-            _context = context;
+            _dbcontext = dbcontext;
         }
 
-        [HttpGet]
+        [HttpPost]
+        public ActionResult<Country> Create([FromBody] Country country)
+        {
+            _dbcontext.Countries.Add(country);
+            _dbcontext.SaveChanges();
+            return Ok();
+        }
 
     }
 }
