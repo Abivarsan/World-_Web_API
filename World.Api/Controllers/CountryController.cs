@@ -23,5 +23,11 @@ namespace World.Api.Controllers
             return Ok();
         }
 
+        [HttpGet]
+        public ActionResult<IEnumerable<Country>> GetAll()
+        {
+            return _dbcontext.Countries.ToList();
+        }
+
     }
 }
