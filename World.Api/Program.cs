@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using World.Api.Common;
 using World.Api.Data;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -16,6 +17,12 @@ builder.Services.AddCors(options =>
 #region Configure Database
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(connectionString));
+#endregion
+
+#region Configure AutoMapper
+
+builder.Services.AddAutoMapper(typeof(MappingProfile));
+
 #endregion
 
 builder.Services.AddControllers();
