@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using World.Api.DTO;
+using World.Api.DTO.Country;
 using World.Api.Models;
 
 namespace World.Api.Common

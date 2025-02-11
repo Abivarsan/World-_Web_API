@@ -10,6 +10,7 @@ namespace World.Api.Data
         }
 
         public DbSet<Country> Countries { get; set; }
+        public DbSet<State> States { get; set; }
     }
 }
  

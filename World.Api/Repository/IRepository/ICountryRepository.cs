@@ -10,7 +10,6 @@ namespace World.Api.Repository.IRepository
         Task update(Country country);
         Task delete(Country country);
         Task save();
-    
         bool IsCountryExists(string name);
     }
 }

@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace World.Api.DTO
+namespace World.Api.DTO.Country
 {
-    public class GetByIdCountryDto
+    public class UpdateCountryDto
     {
         [Key]
         public int Id { get; set; }
