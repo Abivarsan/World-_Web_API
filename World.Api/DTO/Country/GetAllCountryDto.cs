@@ -1,5 +1,4 @@
-﻿
-namespace World.Api.DTO
+﻿namespace World.Api.DTO.Country
 {
     public class GetAllCountryDto
     {
