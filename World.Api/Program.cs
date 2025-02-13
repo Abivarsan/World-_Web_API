@@ -31,6 +31,7 @@ builder.Services.AddAutoMapper(typeof(MappingProfile));
 
 builder.Services.AddTransient<ICountryRepository, CountryRepository>();
 builder.Services.AddTransient<IStateRepository, StateRepository>();
+builder.Services.AddTransient(typeof(IGenericRepository<>),typeof(GenericRepository<>));
 
 #endregion
 
