@@ -12,10 +12,12 @@ namespace World.Api.Controllers
     {
         private readonly ICountryRepository _countryRepository;
         private readonly IMapper _mapper;
-        public CountryController(ICountryRepository countryRepository,IMapper mapper)
+        private readonly ILogger<CountryController>  _logger;
+        public CountryController(ICountryRepository countryRepository,IMapper mapper, ILogger<CountryController> logger)
         {
             _countryRepository = countryRepository;
             _mapper = mapper;
+            _logger = logger;
         }
 
         [HttpPost]
@@ -61,12 +63,15 @@ namespace World.Api.Controllers
         {
             var country = await _countryRepository.Get(id);
 
-            var countryDto = _mapper.Map<GetByIdCountryDto>(country);
+            
 
             if (country == null)
             {
+                _logger.LogError($"Error while try to get record id: {id}");
                 return NoContent();
             }
+            var countryDto = _mapper.Map<GetByIdCountryDto>(country);
+
             return Ok(countryDto);
         }
 
