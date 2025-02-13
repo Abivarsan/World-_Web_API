@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Serilog;
 using World.Api.Common;
 using World.Api.Data;
 using World.Api.Repository;
@@ -26,6 +27,22 @@ builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlSer
 builder.Services.AddAutoMapper(typeof(MappingProfile));
 
 #endregion
+
+#region Configure Serilog
+
+builder.Host.UseSerilog((context, config) =>
+    {
+        config.WriteTo.File("Logs/log.txt", rollingInterval: RollingInterval.Day);
+
+        if (context.HostingEnvironment.IsProduction() == false)
+        {
+            config.WriteTo.Console();
+        }
+
+    });
+
+#endregion
+
 
 #region
 
