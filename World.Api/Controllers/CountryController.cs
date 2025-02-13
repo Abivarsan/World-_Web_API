@@ -24,7 +24,7 @@ namespace World.Api.Controllers
 
         public async Task<ActionResult<CreateCountryDto>> Create([FromBody] CreateCountryDto countryDto)
         {
-            var result =  _countryRepository.IsCountryExists(countryDto.Name);
+            var result =  _countryRepository.IsRecordExists(x=>x.Name == countryDto.Name);
 
             if (result)
             {
@@ -59,7 +59,7 @@ namespace World.Api.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         public async Task<ActionResult<GetByIdCountryDto>> GetById(int id)
         {
-            var country = await _countryRepository.GetById(id);
+            var country = await _countryRepository.Get(id);
 
             var countryDto = _mapper.Map<GetByIdCountryDto>(country);
 
@@ -100,7 +100,7 @@ namespace World.Api.Controllers
                 return BadRequest();
             }
 
-            var country = await _countryRepository.GetById(id);
+            var country = await _countryRepository.Get(id);
 
             if (country == null)
             {
