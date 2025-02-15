@@ -1,5 +1,9 @@
 using Microsoft.EntityFrameworkCore;
+using Serilog;
+using World.Api.Common;
 using World.Api.Data;
+using World.Api.Repository;
+using World.Api.Repository.IRepository;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,6 +20,36 @@ builder.Services.AddCors(options =>
 #region Configure Database
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(connectionString));
+#endregion
+
+#region Configure AutoMapper
+
+builder.Services.AddAutoMapper(typeof(MappingProfile));
+
+#endregion
+
+#region Configure Serilog
+
+builder.Host.UseSerilog((context, config) =>
+    {
+        config.WriteTo.File("Logs/log.txt", rollingInterval: RollingInterval.Day);
+
+        if (context.HostingEnvironment.IsProduction() == false)
+        {
+            config.WriteTo.Console();
+        }
+
+    });
+
+#endregion
+
+
+#region
+
+builder.Services.AddTransient<ICountryRepository, CountryRepository>();
+builder.Services.AddTransient<IStateRepository, StateRepository>();
+builder.Services.AddTransient(typeof(IGenericRepository<>),typeof(GenericRepository<>));
+
 #endregion
 
 builder.Services.AddControllers();
